@@ -175,7 +175,7 @@ elif uploaded_file is not None:
 # Prediction
 # -----------------------------
 
-if img is not None:
+
 
 img = None
 
