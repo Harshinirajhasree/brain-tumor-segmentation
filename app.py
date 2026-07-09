@@ -108,21 +108,11 @@ st.markdown("---")
 # Dataset Information
 # =====================================================
 
-st.subheader("📊 Dataset Information")
 
-col1, col2 = st.columns(2)
+
+col1= st.columns(1)
 
 with col1:
-    st.markdown("""
-### 📚 Training Dataset
-
-- LGG MRI Segmentation Dataset
-- Brain MRI Images
-- Pixel-wise Ground Truth Masks
-- Tumor & Non-Tumor Images
-""")
-
-with col2:
     st.markdown("""
 ### 🤖 Model Details
 
@@ -131,6 +121,8 @@ with col2:
 - Output: Binary Segmentation Mask
 - Framework: TensorFlow / Keras
 """)
+
+
 
 st.markdown("---")
 
