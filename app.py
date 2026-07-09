@@ -138,21 +138,6 @@ st.markdown("---")
 
 
 
-col1= st.columns(1)
-
-with col1:
-    st.markdown("""
-### 🤖 Model Details
-
-- Architecture: U-Net
-- Input Size: 128 × 128
-- Output: Binary Segmentation Mask
-- Framework: TensorFlow / Keras
-""")
-
-
-
-st.markdown("---")
 
 # =====================================================
 # Select Image Source
