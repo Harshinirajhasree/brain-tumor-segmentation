@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 import tensorflow as tf
 from tensorflow.keras.models import load_model
+from PIL import Image
 
 # -----------------------------
 # Custom Loss Functions
@@ -148,7 +149,7 @@ else:
 
     uploaded_file = st.file_uploader(
         "Upload MRI Image",
-        type=["png", "jpg", "jpeg", "tif"]
+        type=["png", "jpg", "jpeg", "tif","tiff"]
     )
 
 # -----------------------------
@@ -163,13 +164,20 @@ if source == "📂 Demo Dataset" and selected_demo is not None:
     img = cv2.imread(image_path)
 
 elif uploaded_file is not None:
+    from PIL import Image
 
-    file_bytes = np.asarray(
-        bytearray(uploaded_file.read()),
-        dtype=np.uint8
-    )
+    pil_image = Image.open(uploaded_file)
 
-    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+    img = np.array(pil_image)
+
+    # Convert grayscale to RGB
+    if len(img.shape) == 2:
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+
+    # Convert RGBA to RGB
+    elif img.shape[2] == 4:
+        img = cv2.cvtColor(img, cv2.COLOR_RGBA2RGB)
+    
 
 # -----------------------------
 # Prediction
