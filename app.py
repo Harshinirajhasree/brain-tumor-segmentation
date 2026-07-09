@@ -108,38 +108,32 @@ st.markdown("---")
 # Select Image Source
 # =====================================================
 
-import os
-
-source = st.radio(
-    "### Select Image Source",
-    ["📂 Demo Dataset", "📤 Upload Your Own MRI"],
-    horizontal=True
-)
-
-uploaded_file = None
-selected_demo = None
-
 if source == "📂 Demo Dataset":
 
     demo_folder = "Demo_Test_Images"
 
-    if os.path.exists(demo_folder):
-
-        demo_images = sorted([
-            f for f in os.listdir(demo_folder)
-            if f.lower().endswith((".png", ".jpg", ".jpeg", ".tif"))
-    ])
-
-    else:
-
+    if not os.path.exists(demo_folder):
         st.error("Demo_Test_Images folder not found.")
         st.stop()
 
-        selected_demo = st.selectbox(
-            "Choose Demo MRI",
-             demo_images
+    demo_images = sorted(
+        [
+            f for f in os.listdir(demo_folder)
+            if f.lower().endswith((".png", ".jpg", ".jpeg", ".tif"))
+        ]
     )
 
+    selected_demo = st.selectbox(
+        "Choose Demo MRI",
+        demo_images
+    )
+
+else:
+
+    uploaded_file = st.file_uploader(
+        "Upload MRI Image",
+        type=["png", "jpg", "jpeg", "tif"]
+    )
 else:
 
     uploaded_file = st.file_uploader(
@@ -154,7 +148,8 @@ else:
 img = None
 
 # Demo Dataset
-if source == "📂 Demo Dataset":
+# Demo Dataset
+if source == "📂 Demo Dataset" and selected_demo is not None:
 
     image_path = os.path.join(demo_folder, selected_demo)
 
