@@ -105,8 +105,24 @@ st.markdown("---")
 
 # -----------------------------
 # =====================================================
+
+
+# Load Selected Image
+# -----------------------------
+# =====================================================
 # Select Image Source
 # =====================================================
+
+import os
+
+source = st.radio(
+    "### Select Image Source",
+    ["📂 Demo Dataset", "📤 Upload Your Own MRI"],
+    horizontal=True
+)
+
+uploaded_file = None
+selected_demo = None
 
 if source == "📂 Demo Dataset":
 
@@ -130,20 +146,36 @@ if source == "📂 Demo Dataset":
 
 else:
 
-        uploaded_file = st.file_uploader(
-            "Upload MRI Image",
-             type=["png", "jpg", "jpeg", "tif"]
-    )
-else:
-
-        uploaded_file = st.file_uploader(
+    uploaded_file = st.file_uploader(
         "Upload MRI Image",
         type=["png", "jpg", "jpeg", "tif"]
     )
-# Prediction
 
+# -----------------------------
 # Load Selected Image
 # -----------------------------
+
+img = None
+
+if source == "📂 Demo Dataset" and selected_demo is not None:
+
+    image_path = os.path.join(demo_folder, selected_demo)
+    img = cv2.imread(image_path)
+
+elif uploaded_file is not None:
+
+    file_bytes = np.asarray(
+        bytearray(uploaded_file.read()),
+        dtype=np.uint8
+    )
+
+    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+
+# -----------------------------
+# Prediction
+# -----------------------------
+
+if img is not None:
 
 img = None
 
