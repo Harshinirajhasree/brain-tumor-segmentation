@@ -102,6 +102,34 @@ Upload an MRI image or select a demo MRI to automatically segment the tumor regi
 """
 )
 
+# =====================================================
+# Model Details
+# =====================================================
+
+st.subheader("🤖 Model Details")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("""
+### 🧠 AI Model
+
+- **Architecture:** U-Net
+- **Framework:** TensorFlow / Keras
+- **Task:** Semantic Segmentation
+- **Input Size:** 128 × 128
+""")
+
+with col2:
+    st.markdown("""
+### 📈 Prediction Output
+
+- **Output:** Binary Tumor Mask
+- **Prediction:** Pixel-wise Segmentation
+- **Input:** Brain MRI Image
+- **Display:** Tumor Overlay
+""")
+
 st.markdown("---")
 
 # =====================================================
