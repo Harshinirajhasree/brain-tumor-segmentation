@@ -134,7 +134,7 @@ else:
             "Upload MRI Image",
              type=["png", "jpg", "jpeg", "tif"]
     )
-    else:
+else:
 
         uploaded_file = st.file_uploader(
         "Upload MRI Image",
