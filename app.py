@@ -44,27 +44,134 @@ model = load_model(
 # -----------------------------
 # Streamlit Page
 # -----------------------------
+# =====================================================
+# Page Configuration
+# =====================================================
 st.set_page_config(
-    page_title="Brain Tumor Segmentation",
+    page_title="Brain Tumor Segmentation System",
+    page_icon="🧠",
     layout="wide"
 )
 
-st.title("🧠 Brain Tumor Segmentation using U-Net")
-st.write("Upload a brain MRI image to predict the tumor region.")
+# =====================================================
+# Sidebar
+# =====================================================
+with st.sidebar:
 
-uploaded_file = st.file_uploader(
-    "Choose an MRI image",
-    type=["tif", "png", "jpg", "jpeg"]
+    st.image(
+        "https://img.icons8.com/color/96/brain.png",
+        width=90
+    )
+
+    st.title("Brain Tumor AI")
+
+    st.markdown("---")
+
+    st.markdown("### 👩‍💻 Developer")
+
+    st.write("**Harshini Rajha Sree R.**")
+    st.write("B.Tech Biomedical Engineering")
+    st.write("SRM Institute of Science and Technology")
+
+    st.markdown("---")
+
+    st.markdown("### 📌 Project")
+
+    st.write("Deep Learning-based")
+    st.write("Brain Tumor Segmentation")
+    st.write("using U-Net Architecture")
+
+    st.markdown("---")
+
+    st.info(
+        "This application is intended for educational "
+        "and research purposes only."
+    )
+
+# =====================================================
+# Main Header
+# =====================================================
+st.title("🧠 Brain Tumor Segmentation System")
+
+st.markdown(
+"""
+### Deep Learning-Based MRI Tumor Segmentation using U-Net
+
+Upload an MRI image or select a demo MRI to automatically segment the tumor region.
+"""
 )
 
-# -----------------------------
-# Prediction
-# -----------------------------
-if uploaded_file is not None:
+st.markdown("---")
 
-    # Read image
-    file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
+# -----------------------------
+# =====================================================
+# Select Image Source
+# =====================================================
+
+import os
+
+source = st.radio(
+    "### Select Image Source",
+    ["📂 Demo Dataset", "📤 Upload Your Own MRI"],
+    horizontal=True
+)
+
+uploaded_file = None
+selected_demo = None
+
+if source == "📂 Demo Dataset":
+
+    demo_folder = "Demo_Test_Images"
+
+    if os.path.exists(demo_folder):
+
+    demo_images = sorted([
+        f for f in os.listdir(demo_folder)
+        if f.lower().endswith((".png", ".jpg", ".jpeg", ".tif"))
+    ])
+
+else:
+
+    st.error("Demo_Test_Images folder not found.")
+    st.stop()
+
+    selected_demo = st.selectbox(
+        "Choose Demo MRI",
+        demo_images
+    )
+
+else:
+
+    uploaded_file = st.file_uploader(
+        "Upload MRI Image",
+        type=["png", "jpg", "jpeg", "tif"]
+    )
+# Prediction
+
+# Load Selected Image
+# -----------------------------
+
+img = None
+
+# Demo Dataset
+if source == "📂 Demo Dataset":
+
+    image_path = os.path.join(demo_folder, selected_demo)
+
+    img = cv2.imread(image_path)
+
+# User Upload
+elif uploaded_file is not None:
+
+    file_bytes = np.asarray(
+        bytearray(uploaded_file.read()),
+        dtype=np.uint8
+    )
+
     img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+
+# Continue only if an image is available
+if img is not None:
 
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
