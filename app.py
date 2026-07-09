@@ -130,14 +130,14 @@ if source == "📂 Demo Dataset":
         if f.lower().endswith((".png", ".jpg", ".jpeg", ".tif"))
     ])
 
-else:
+   else:
 
-    st.error("Demo_Test_Images folder not found.")
-    st.stop()
+        st.error("Demo_Test_Images folder not found.")
+        st.stop()
 
-    selected_demo = st.selectbox(
-        "Choose Demo MRI",
-        demo_images
+        selected_demo = st.selectbox(
+            "Choose Demo MRI",
+             demo_images
     )
 
 else:
