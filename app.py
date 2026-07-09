@@ -104,6 +104,40 @@ Upload an MRI image or select a demo MRI to automatically segment the tumor regi
 
 st.markdown("---")
 
+# =====================================================
+# Dataset Information
+# =====================================================
+
+st.subheader("📊 Dataset Information")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("""
+### 📚 Training Dataset
+
+- LGG MRI Segmentation Dataset
+- Brain MRI Images
+- Pixel-wise Ground Truth Masks
+- Tumor & Non-Tumor Images
+""")
+
+with col2:
+    st.markdown("""
+### 🤖 Model Details
+
+- Architecture: U-Net
+- Input Size: 128 × 128
+- Output: Binary Segmentation Mask
+- Framework: TensorFlow / Keras
+""")
+
+st.markdown("---")
+
+# =====================================================
+# Select Image Source
+# =====================================================
+
 # -----------------------------
 # =====================================================
 
@@ -291,3 +325,22 @@ if img is not None:
         st.image(blended)
 
     st.success("Segmentation Completed Successfully!")
+    st.markdown("---")
+
+    st.subheader("📚 Dataset Description")
+
+    st.markdown("""
+This model was trained using annotated **Brain MRI images**
+from the **LGG MRI Segmentation Dataset**.
+
+Each MRI slice is paired with a manually annotated
+**ground truth mask** that identifies the tumor region.
+
+The dataset contains both **tumor** and **non-tumor**
+brain MRI images used for supervised semantic segmentation.
+""")
+
+    st.info(
+    "This application is intended for research and educational purposes only. "
+    "It is not designed or approved for clinical diagnosis."
+)
