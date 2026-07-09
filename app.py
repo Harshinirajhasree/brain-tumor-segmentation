@@ -125,9 +125,9 @@ if source == "📂 Demo Dataset":
 
     if os.path.exists(demo_folder):
 
-    demo_images = sorted([
-        f for f in os.listdir(demo_folder)
-        if f.lower().endswith((".png", ".jpg", ".jpeg", ".tif"))
+        demo_images = sorted([
+            f for f in os.listdir(demo_folder)
+            if f.lower().endswith((".png", ".jpg", ".jpeg", ".tif"))
     ])
 
    else:
