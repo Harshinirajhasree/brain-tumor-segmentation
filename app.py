@@ -198,13 +198,18 @@ if source == "📂 Demo Dataset" and selected_demo is not None:
 # User Upload
 elif uploaded_file is not None:
 
-    file_bytes = np.asarray(
-        bytearray(uploaded_file.read()),
-        dtype=np.uint8
-    )
+    from PIL import Image
 
-    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+    pil_img = Image.open(uploaded_file)
+    img = np.array(pil_img)
 
+# Convert grayscale to RGB
+    if len(img.shape) == 2:
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+
+# Convert RGBA to RGB
+    elif len(img.shape) == 3 and img.shape[2] == 4:
+        img = cv2.cvtColor(img, cv2.COLOR_RGBA2RGB)
 # Continue only if an image is available
 if img is not None:
 
